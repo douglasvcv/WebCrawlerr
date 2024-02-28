@@ -5,7 +5,7 @@ import { MongoClient } from 'mongodb'
 
 
 
-async function getWeatherForecast(city){
+export async function getWeatherForecast(city){
     try {
         const apiKey = process.env.APIKEY
         const url = "http://api.weatherapi.com/v1/forecast.json"
@@ -24,7 +24,7 @@ async function getWeatherForecast(city){
     }
 }
 
-async function insertWeatherData(data){
+export async function insertWeatherData(data){
     const uri = process.env.DB_URI
     const client = new MongoClient(uri, {useNewUrlParser: true, useUnifiedTopology: true })
 
@@ -45,7 +45,7 @@ async function insertWeatherData(data){
 const cities = ['brasilia']
 
 
-async function getAndInsertWeatherData(cities){
+export async function getAndInsertWeatherData(cities){
     for(let city = 0; city < cities.length; city++){
         const forecastData = await getWeatherForecast(cities[city])
 
@@ -62,4 +62,6 @@ async function getAndInsertWeatherData(cities){
     }
 }
 
-getAndInsertWeatherData(cities)
+
+
+
