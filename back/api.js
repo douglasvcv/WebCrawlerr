@@ -1,5 +1,4 @@
 import 'dotenv/config'
-
 import axios from 'axios'
 import { MongoClient } from 'mongodb'
 
@@ -7,7 +6,7 @@ import { MongoClient } from 'mongodb'
 
 export async function getWeatherForecast(city){
     try {
-        const apiKey = process.env.APIKEY
+        const apiKey = process.env.VITE_APIKEY
         const url = "http://api.weatherapi.com/v1/forecast.json"
         const response = await axios.get(url, {
             params:{
@@ -25,7 +24,7 @@ export async function getWeatherForecast(city){
 }
 
 export async function insertWeatherData(data){
-    const uri = process.env.DB_URI
+    const uri = process.env.VITE_DB_URI
     const client = new MongoClient(uri, {useNewUrlParser: true, useUnifiedTopology: true })
 
     try {
