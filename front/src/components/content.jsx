@@ -1,15 +1,16 @@
 import React, { useEffect } from "react"
 import { useState } from "react"
-
+import { getWeather } from "../../api/getWeather"
 
 function Content(){
     const [content, setContent] = useState("")
 
-    function ContentChange(){
-        console.log("dadssad")
+    function ContentChange(e){
+        setContent(e.target.value)
     }
-    function Pesquisar(){
-        console.log("dadssad")
+  async  function Pesquisar(){
+      const data =  await getWeather(content)
+      console.log(data)
     }
 
     return(
@@ -18,6 +19,7 @@ function Content(){
             <div className="search">
                 <input type="text" placeholder="Cidade" onChange={ContentChange}/>
                 <button onClick={Pesquisar}>Previsão</button>
+                <p>{}</p>
             </div>
         </div>
         
