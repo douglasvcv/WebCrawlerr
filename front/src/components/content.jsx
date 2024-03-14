@@ -4,13 +4,15 @@ import { getWeather } from "../../api/getWeather"
 
 function Content(){
     const [content, setContent] = useState("")
+    const [result, setResult] = useState()
 
     function ContentChange(e){
         setContent(e.target.value)
     }
   async  function Pesquisar(){
       const data =  await getWeather(content)
-      console.log(data)
+     await setResult(data)
+     await console.log(result.location.name)
     }
 
     return(
@@ -19,7 +21,9 @@ function Content(){
             <div className="search">
                 <input type="text" placeholder="Cidade" onChange={ContentChange}/>
                 <button onClick={Pesquisar}>Previsão</button>
-                <p>{}</p>
+                {result ? <p>Nome: {result.location.name}<br></br>Temperatura(C): {result.current.temp_c}</p>
+                        
+                : <p>Nome: <br></br>Temperatura(C): </p>}
             </div>
         </div>
         

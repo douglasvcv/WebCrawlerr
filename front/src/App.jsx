@@ -9,9 +9,6 @@ function App() {
   return (
     <>
      <Content></Content>
-     <p>
-      My variable is {}
-     </p>
     </>
   )
 }
