@@ -12,7 +12,7 @@ export const getWeather = async (city) =>{
                 days:1
             }
         })
-       
+       console.log(response.data)
         return response.data
     } catch (error) {
         console.error('Erro ao obter a previsão do tempo:', error);

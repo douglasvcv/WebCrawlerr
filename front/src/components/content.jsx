@@ -5,6 +5,7 @@ import { getWeather } from "../../api/getWeather"
 function Content(){
     const [content, setContent] = useState("")
     const [result, setResult] = useState()
+    const [image, setImage] = useState()
 
     function ContentChange(e){
         setContent(e.target.value)
@@ -21,7 +22,7 @@ function Content(){
             <div className="search">
                 <input type="text" placeholder="Cidade" onChange={ContentChange}/>
                 <button onClick={Pesquisar}>Previsão</button>
-                {result ? <p>Nome: {result.location.name}<br></br>Temperatura(C): {result.current.temp_c}</p>
+                {result ? <p>Nome: {result.location.name}<br></br>Temperatura(C): {result.current.temp_c}<br></br> <img src={result.current.condition.icon}/> </p>
                         
                 : <p>Nome: <br></br>Temperatura(C): </p>}
             </div>

@@ -15,3 +15,11 @@ input{
   border: none;
   
 }
+
+p{
+  border: 1px solid rgb(39, 48, 113);
+  background: white;
+  border-radius: 40px;
+  height: 35vh;
+  width: 25vw;
+}
