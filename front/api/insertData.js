@@ -22,7 +22,7 @@ export async function insertData(data) {
 
 export async function getAndInsertWeatherData(cities){
     for(let city = 0; city < cities.length; city++){
-        const forecastData = await getWeatherForecast(cities[city])
+        const forecastData = await getWeather(cities[city])
 
         if(forecastData){
             console.log(`Previsão do tempo para ${cities[city]}:`);

@@ -1,14 +1,54 @@
-import express from 'express'
 import { MongoClient } from "mongodb";
-import cors from 'cors'
-const app = express()
 
-app.use(cors())
-app.use(express.json())
+//Connect cluster
+export const connectToCluster = async (uri) => {
+    let mongoClient;
+  
+    try {
+      mongoClient = new MongoClient(uri);
+      console.log("Connecting to MongoDB Atlas cluster...");
+      await mongoClient.connect();
+      console.log("Successfully connected to MongoDB Atlas!");
+  
+      return mongoClient;
+    } catch (error) {
+      console.error("Connection to MongoDB Atlas failed!", error);
+      process.exit();
+    }
+  };
 
 
-app.get('/api/item', (req, res)=>{
-    
-})
+  //CRUD
+export const executeWebCrawlerFindOperation = async (city) => {
+    const uri = process.env.DB_URI;
+    let mongoClient;
+  
+    try {
+      mongoClient = await connectToCluster(uri);
+      const db = mongoClient.db("webcrawler");
+      const collection = db.collection("weather");
+  
+    //    console.log('CREATE WeatherForecast')
+    //    await createWebCrawlerDocument(collection)
+  
+      // console.log("UPDATE Forecast currentTemperature");
+      // await updateForecastByName(collection, "Crato", {
+      //   currentTemperature: "27.4",
+      // });
+  
+      // console.log("DELETE WeatherForecast");
+      // await deleteForecastByName(collection, "Crato");
+  
+      let data = await findForecastByName(collection, city);
 
-app.listen(3000, ()=>console.log("Servidor rodando na porta 3000"))
+        return data
+    } finally {
+      await mongoClient.close();
+    }
+  };
+
+  
+  //Find data by name
+  export async function findForecastByName(collection, name) {
+    return collection.find({ name }).toArray();
+  }

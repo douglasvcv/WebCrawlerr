@@ -2,6 +2,9 @@ import React, { useEffect } from "react"
 import { useState } from "react"
 import { getWeather } from "../../api/getWeather"
 
+import { getAndInsertWeatherData, insertData } from "../../api/insertData"
+import { executeWebCrawlerFindOperation } from "../../api/server"
+
 function Content(){
     const [content, setContent] = useState("")
     const [result, setResult] = useState()
@@ -15,6 +18,14 @@ function Content(){
      await setResult(data)
      await console.log(result.location.name)
     }
+    useEffect(()=>{
+        if(content){
+          let result =  executeWebCrawlerFindOperation(content.location.name)
+          return result
+        }else{
+            
+        }
+    }, [content])
 
     return(
         

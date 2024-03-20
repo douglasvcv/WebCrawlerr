@@ -1,4 +1,5 @@
 import { MongoClient } from "mongodb";
+import 'dotenv/config'
 
 
 //Connect to Cluster
@@ -18,6 +19,9 @@ export const connectToCluster = async (uri) => {
   }
 };
 
+export async function findForecastByName(collection, {name}) {
+    return collection.find({ name }).toArray();
+  }
 //Execute CRUD
 export const executeWebCrawlerCrudOperations = async () => {
   const uri = process.env.VITE_DB_URI;
@@ -46,34 +50,3 @@ export const executeWebCrawlerCrudOperations = async () => {
   }
 };
 executeWebCrawlerCrudOperations()
-//Post
-export async function createWebCrawlerDocument(collection) {
-  const forecastDocument = {
-    currentTemperature: "24.4",
-    icon: "//cdn.weatherapi.com/weather/64x64/day/353.png",
-    locationName: "Crato",
-    locationRegion: "Ceara",
-    currentCondition: "Light rain shower",
-  };
-
-  await collection.insertOne(forecastDocument);
-}
-
-//Find
-export async function findForecastByName(collection, name) {
-  return collection.find({ name }).toArray();
-}
-
-//Update
-export async function updateForecastByName(
-  collection,
-  locationName,
-  updatedFields
-) {
-  await collection.updateMany({ locationName }, { $set: updatedFields });
-}
-
-//Delete
-export async function deleteForecastByName(collection, locationName) {
-  await collection.deleteMany({ locationName });
-}
