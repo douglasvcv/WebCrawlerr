@@ -20,7 +20,7 @@ export const connectToCluster = async (uri) => {
 };
 
 export async function findForecastByName(collection, {name}) {
-    return collection.find({ name }).toArray();
+    return collection.find({"location.name": name }).toArray();
   }
 //Execute CRUD
 export const executeWebCrawlerCrudOperations = async () => {
@@ -43,7 +43,7 @@ export const executeWebCrawlerCrudOperations = async () => {
     // console.log("DELETE WeatherForecast");
     // await deleteForecastByName(collection, "Crato");
 
-    console.log(await findForecastByName(collection, "Crato"));
+    console.log(await findForecastByName(collection,{nome: "Crato"}));
    
   } finally {
     await mongoClient.close();

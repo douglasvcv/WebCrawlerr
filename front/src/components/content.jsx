@@ -3,7 +3,7 @@ import { useState } from "react"
 import { getWeather } from "../../api/getWeather"
 
 import { getAndInsertWeatherData, insertData } from "../../api/insertData"
-import { executeWebCrawlerFindOperation } from "../../api/server"
+//import { executeWebCrawlerFindOperation } from "../../api/server"
 
 function Content(){
     const [content, setContent] = useState("")
@@ -25,7 +25,7 @@ function Content(){
         }else{
             
         }
-    }, [content])
+    }, [])
 
     return(
         

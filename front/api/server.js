@@ -39,9 +39,9 @@ export const executeWebCrawlerFindOperation = async (city) => {
       // console.log("DELETE WeatherForecast");
       // await deleteForecastByName(collection, "Crato");
   
-      let data = await findForecastByName(collection, city);
+      let data = await findForecastByName(collection,{name: city});
 
-        return data
+        return await data
     } finally {
       await mongoClient.close();
     }
@@ -49,6 +49,6 @@ export const executeWebCrawlerFindOperation = async (city) => {
 
   
   //Find data by name
-  export async function findForecastByName(collection, name) {
-    return collection.find({ name }).toArray();
+  export async function findForecastByName(collection, {name}) {
+    return collection.find({"location.name": name }).toArray();
   }
