@@ -47,13 +47,9 @@ export const executeWebCrawlerCrudOperations = async () => {
 };
 executeWebCrawlerCrudOperations()
 //Post
-export async function createWebCrawlerDocument(collection) {
+export async function createWebCrawlerDocument(collection, data) {
   const forecastDocument = {
-    currentTemperature: "24.4",
-    icon: "//cdn.weatherapi.com/weather/64x64/day/353.png",
-    locationName: "Crato",
-    locationRegion: "Ceara",
-    currentCondition: "Light rain shower",
+  data    
   };
 
   await collection.insertOne(forecastDocument);

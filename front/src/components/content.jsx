@@ -18,14 +18,7 @@ function Content(){
       console.log(result.location.name)
      
     }
-    useEffect(()=>{
-        if(content){
-          let result =  executeWebCrawlerFindOperation(content.location.name)
-          return result
-        }else{
-            
-        }
-    }, [])
+    
 
     return(
         
