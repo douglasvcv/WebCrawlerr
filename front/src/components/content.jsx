@@ -2,7 +2,6 @@ import React, { useEffect } from "react"
 import { useState } from "react"
 import { getWeather } from "../../api/getWeather"
 
-import { getAndInsertWeatherData, insertData } from "../../api/insertData"
 //import { executeWebCrawlerFindOperation } from "../../api/server"
 
 function Content(){
@@ -15,8 +14,9 @@ function Content(){
     }
   async  function Pesquisar(){
       const data =  await getWeather(content)
-     await setResult(data)
-     await console.log(result.location.name)
+      setResult(data)
+      console.log(result.location.name)
+     
     }
     useEffect(()=>{
         if(content){
@@ -30,6 +30,7 @@ function Content(){
     return(
         
         <div className="container">
+        
             <div className="search">
                 <input type="text" placeholder="Cidade" onChange={ContentChange}/>
                 <button onClick={Pesquisar}>Previsão</button>

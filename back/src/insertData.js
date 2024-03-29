@@ -1,5 +1,5 @@
-import { api } from "./api";
-import { getWeather } from "./getWeather";
+import { api } from "../../front/api/api";
+import { getWeather } from "../../front/api/getWeather";
 import { MongoClient } from "mongodb";
 
 export async function insertData(data) {

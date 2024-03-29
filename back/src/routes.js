@@ -1,4 +1,13 @@
+import express, { response } from 'express'
 import { MongoClient } from "mongodb";
+import 'dotenv/config'
+import cors from 'cors'
+
+const app = express()
+
+app.use(express.json())
+app.use(cors())
+
 
 //Connect cluster
 export const connectToCluster = async (uri) => {
@@ -40,8 +49,9 @@ export const executeWebCrawlerFindOperation = async (city) => {
       // await deleteForecastByName(collection, "Crato");
   
       let data = await findForecastByName(collection,{name: city});
+      
 
-        return await data
+        return data
     } finally {
       await mongoClient.close();
     }
@@ -50,5 +60,23 @@ export const executeWebCrawlerFindOperation = async (city) => {
   
   //Find data by name
   export async function findForecastByName(collection, {name}) {
-    return collection.find({"location.name": name }).toArray();
+    
+    const response = await collection.find({"location.name": name }).toArray();
+    console.log({response})
+    return response
   }
+
+app.get('/info', async (req, res) =>{
+   const {city} = req.query
+   console.log(req.query)
+   console.log({city})
+   try {
+   const data = await executeWebCrawlerFindOperation(city)
+   res.status(200).json(data)
+   } catch (error) {
+    res.status(400).json({message:"Ocorreu um erro: "+ error.message}) 
+   }
+    
+})
+
+app.listen(3000, ()=>console.log("Servidor aberto!") )
