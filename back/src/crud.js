@@ -31,12 +31,15 @@ export async function createWebCrawlerDocument(collection, data) {
     const forecastDocument = {
     data    
     };
-  
-    await collection.insertOne(forecastDocument);
+    if(forecastDocument.data.location.country == "Brazil"){
+      await collection.insertOne(forecastDocument);
+      
+    }
   }
 
 //Execute CRUD
 export const executeWebCrawlerFindOperation = async (city) => {
+  let nameUpper = city.charAt(0).toUpperCase() + city.slice(1)
   const uri = process.env.DB_URI;
   let mongoClient;
 
@@ -45,7 +48,7 @@ export const executeWebCrawlerFindOperation = async (city) => {
     const db = mongoClient.db("webcrawler");
     const collection = db.collection("weather");
 
-    let data = await findForecastByName(collection, { name: city });
+    let data = await findForecastByName(collection, { name: nameUpper });
     
     if (data.length == 0) {
       try {
@@ -54,17 +57,18 @@ export const executeWebCrawlerFindOperation = async (city) => {
         const response = await axios.get(url, {
             params:{
                 key:apiKey,
-                q:city,
+                q:nameUpper,
                 days:1
             }
         })
          const data = await response.data
-        // if(data.data.error.code == 1002){
-        //     console.log("Não foi possível adicionar os dados!")
-        // }else{
-        //     await createWebCrawlerDocument(collection, data)
 
-        // }
+         if(data){
+             await createWebCrawlerDocument(collection, data)
+
+         }
+
+         
                 console.log("Mostrando o que aparece: ", await data)
         return [data];
       } catch (error) {
