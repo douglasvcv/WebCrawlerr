@@ -1,18 +1,29 @@
-import AWS from 'aws-sdk'
+const AWS = require('aws-sdk');
 
-const lambda = new AWS.Lambda()
-const events = new AWS.CloudWatchEvents()
+// Configuração do AWS SDK com suas credenciais
+AWS.config.update({
+    region: 'us-east-1',
+    accessKeyId: process.env.ACCESSKEY,
+    secretAccessKey: process.env.PRIVACYKEY
+});
 
-const ruleParams = {
-    Name: 'triggerLambda',
-    ScheduleExpression: 'cron(0 0 * * ? *)'
+// Crie uma nova instância do serviço Lambda
+const lambda = new AWS.Lambda();
+
+// Função para invocar a função lambda
+async function invokeLambda() {
+    const params = {
+        FunctionName: 'getWeatherData',
+        Payload: JSON.stringify({ key: 'value' }) // Dados que você deseja passar para a função lambda
+    };
+
+    try {
+        const data = await lambda.invoke(params).promise();
+        console.log("Resposta da função Lambda:", data.Payload);
+    } catch (err) {
+        console.error(err, err.stack);
+    }
 }
 
-const ruleResult = await events.putRule(ruleParams).promise()
-
-const ruleArn = ruleResult.RuleArn
-
-const lambdaParams = {
-    FunctionName: 'getWeatherData',
-    StatementId: ''
-}
+// Chame a função para invocar a função Lambda
+invokeLambda();
